@@ -67,6 +67,8 @@ const Comment = (props) => {
     }
   }
 
+  const [visible, setVisible] = useState(true);
+
   return (
     <div
       className="comment"
@@ -85,6 +87,14 @@ const Comment = (props) => {
         >
           {comment.by}
         </a>
+        <div
+          style={{display: 'inline', marginLeft: 15, cursor: 'pointer'}}
+          onClick={() => {
+            setVisible(!visible);
+          }}
+        >
+          {visible ? '[-]' : '[+]'}
+        </div>
         <Button
           style={{
             float: 'right',
@@ -99,13 +109,19 @@ const Comment = (props) => {
           }}
         />
       </div>
-      <div
+      <span
         style={{
-          fontSize: 12.5,
-          fontWeight: 400,
+          display: visible ? 'block' : 'none',
         }}
-      >{parse(comment.text)}</div>
-      {children}
+      >
+        <div
+          style={{
+            fontSize: 12.5,
+            fontWeight: 400,
+          }}
+        >{parse(comment.text)}</div>
+        {children}
+      </span>
     </div>
   );
 }

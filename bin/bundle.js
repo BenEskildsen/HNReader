@@ -288,6 +288,10 @@ var Comment = function Comment(props) {
       _iterator2.f();
     }
   }
+  var _useState5 = useState(true),
+    _useState6 = _slicedToArray(_useState5, 2),
+    visible = _useState6[0],
+    setVisible = _useState6[1];
   return /*#__PURE__*/React.createElement("div", {
     className: "comment"
   }, /*#__PURE__*/React.createElement("div", {
@@ -302,7 +306,16 @@ var Comment = function Comment(props) {
     style: {
       color: '#828282'
     }
-  }, comment.by), /*#__PURE__*/React.createElement(Button, {
+  }, comment.by), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'inline',
+      marginLeft: 15,
+      cursor: 'pointer'
+    },
+    onClick: function onClick() {
+      setVisible(!visible);
+    }
+  }, visible ? '[-]' : '[+]'), /*#__PURE__*/React.createElement(Button, {
     style: {
       "float": 'right',
       fontSize: 11,
@@ -316,12 +329,16 @@ var Comment = function Comment(props) {
         rerender: true
       });
     }
-  })), /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: visible ? 'block' : 'none'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 12.5,
       fontWeight: 400
     }
-  }, parse(comment.text)), children);
+  }, parse(comment.text)), children));
 };
 module.exports = Thread;
 },{"../hnAPI":4,"bens_ui_components":31,"html-react-parser":46,"react":60}],4:[function(require,module,exports){
