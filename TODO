@@ -1,0 +1,12 @@
+
+  - get true back button support with window history stuff
+  - reset scroll position when moving between thread <--> lobby
+
+  - lobby
+    - styling
+    - track threads I've already clicked on
+    - view block list
+
+  - threads
+    - styling
+    - display number of blocked comments + button to view them
