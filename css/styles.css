@@ -65,6 +65,10 @@ button:hover {
   display: none;
 }
 
+.comment {
+  margin-left: 50px;
+  margin-top: 6px;
+}
 
 .comments {
   border-bottom: 1px solid #faf8ef;

@@ -289,10 +289,7 @@ var Comment = function Comment(props) {
     }
   }
   return /*#__PURE__*/React.createElement("div", {
-    className: "comment",
-    style: {
-      marginTop: 6
-    }
+    className: "comment"
   }, /*#__PURE__*/React.createElement("div", {
     className: "parent",
     style: {

@@ -70,9 +70,6 @@ const Comment = (props) => {
   return (
     <div
       className="comment"
-      style={{
-        marginTop: 6,
-      }}
     >
       <div
         className={"parent"}
