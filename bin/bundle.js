@@ -289,8 +289,8 @@ var Comment = function Comment(props) {
     }
   }
   return /*#__PURE__*/React.createElement("div", {
+    className: "comment",
     style: {
-      marginLeft: 50,
       marginTop: 6
     }
   }, /*#__PURE__*/React.createElement("div", {
