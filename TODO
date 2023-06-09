@@ -1,12 +1,4 @@
 
-  - get true back button support with window history stuff
-  - reset scroll position when moving between thread <--> lobby
-
-  - lobby
-    - styling
-    - track threads I've already clicked on
-    - view block list
-
-  - threads
-    - styling
-    - display number of blocked comments + button to view them
+  - history
+    - get history right when entering straight into a thread on page load
+    - and also allow forward when you go back to lobby

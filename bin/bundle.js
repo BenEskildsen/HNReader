@@ -47,6 +47,7 @@ function Lobby(props) {
       className: "comments",
       onClick: function onClick() {
         history.pushState({}, '', '');
+        window.scrollTo(0, 0);
         dispatch({
           type: 'SET',
           threadID: thread.id
@@ -123,7 +124,6 @@ function Main(props) {
     if (!localStorage.getItem("blockList")) {
       localStorage.setItem("blockList", JSON.stringify([]));
     }
-    history.pushState({}, '', '');
     window.addEventListener('popstate', function (ev) {
       dispatch({
         type: 'SET',
@@ -138,6 +138,9 @@ function Main(props) {
   useEffect(function () {
     var threadID = getQueryParam('threadID');
     if (threadID != state.threadID) {
+      window.scrollTo(0, 0);
+      console.log("push history state");
+      history.pushState({}, '', '');
       dispatch({
         type: 'SET',
         threadID: threadID
@@ -159,6 +162,8 @@ function Main(props) {
       cursor: 'pointer'
     },
     onClick: function onClick() {
+      history.pushState({}, '', '');
+      window.scrollTo(0, 0);
       dispatch({
         type: 'SET',
         threadID: null
@@ -183,7 +188,8 @@ function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefine
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var React = require('react');
 var _require = require('bens_ui_components'),
-  Button = _require.Button;
+  Button = _require.Button,
+  Divider = _require.Divider;
 var _require2 = require('../hnAPI'),
   getComments = _require2.getComments,
   getThread = _require2.getThread;
@@ -216,7 +222,17 @@ function Thread(props) {
     for (_iterator.s(); !(_step = _iterator.n()).done;) {
       var c = _step.value;
       if (!c.text || c.deleted) continue;
-      if (blockList.includes(c.by)) continue; // block
+      if (blockList.includes(c.by)) {
+        displayComments.push( /*#__PURE__*/React.createElement(Divider, {
+          key: "comment_" + c.id,
+          style: {
+            border: '1px solid #b1a485',
+            margin: '6 50',
+            width: 'auto'
+          }
+        }));
+        continue;
+      }
       displayComments.push( /*#__PURE__*/React.createElement(Comment, {
         comment: c,
         key: "comment_" + c.id
@@ -229,13 +245,14 @@ function Thread(props) {
   }
   return /*#__PURE__*/React.createElement("div", {
     style: {}
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("a", {
     style: {
       paddingLeft: 25,
       marginBottom: 10,
       marginTop: 10,
       fontWeight: 'bold'
-    }
+    },
+    href: thread.url
   }, thread.title), displayComments);
 }
 var Comment = function Comment(props) {
@@ -249,7 +266,17 @@ var Comment = function Comment(props) {
       for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
         var c = _step2.value;
         if (!c.text || c.deleted) continue;
-        if (blockList.includes(c.by)) continue; // block
+        if (blockList.includes(c.by)) {
+          children.push( /*#__PURE__*/React.createElement(Divider, {
+            key: "comment_" + c.id,
+            style: {
+              border: '1px solid #b1a485',
+              margin: '6 50',
+              width: 'auto'
+            }
+          }));
+          continue;
+        }
         children.push( /*#__PURE__*/React.createElement(Comment, {
           comment: c,
           key: "comment_" + c.id
@@ -267,11 +294,18 @@ var Comment = function Comment(props) {
       marginTop: 6
     }
   }, /*#__PURE__*/React.createElement("div", {
+    className: "parent",
     style: {
       fontSize: 11,
+      height: 15,
       color: '#828282'
     }
-  }, comment.by, /*#__PURE__*/React.createElement(Button, {
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "https://news.ycombinator.com/user?id=" + comment.by,
+    style: {
+      color: '#828282'
+    }
+  }, comment.by), /*#__PURE__*/React.createElement(Button, {
     style: {
       "float": 'right',
       fontSize: 11,
@@ -287,7 +321,7 @@ var Comment = function Comment(props) {
     }
   })), /*#__PURE__*/React.createElement("div", {
     style: {
-      fontSize: 13.5,
+      fontSize: 12.5,
       fontWeight: 400
     }
   }, parse(comment.text)), children);

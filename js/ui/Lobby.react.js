@@ -32,6 +32,7 @@ function Lobby(props) {
           className={"comments"}
           onClick={() => {
             history.pushState({}, '', '');
+            window.scrollTo(0, 0);
             dispatch({type: 'SET', threadID: thread.id});
           }}
         >

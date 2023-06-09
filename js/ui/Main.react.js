@@ -37,8 +37,6 @@ function Main(props) {
       localStorage.setItem("blockList", JSON.stringify([]));
     }
 
-    history.pushState({}, '', '');
-
     window.addEventListener('popstate', function(ev) {
       dispatch({type: 'SET', threadID: null});
       // window.location.href = '/';
@@ -50,6 +48,9 @@ function Main(props) {
   useEffect(() => {
     const threadID = getQueryParam('threadID');
     if (threadID != state.threadID) {
+      window.scrollTo(0, 0);
+      console.log("push history state");
+      history.pushState({}, '', '');
       dispatch({type: 'SET', threadID});
     }
   }, [state.threadID]);
@@ -68,6 +69,8 @@ function Main(props) {
           cursor: 'pointer',
         }}
         onClick={() => {
+          history.pushState({}, '', '');
+          window.scrollTo(0, 0);
           dispatch({type: 'SET', threadID: null});
         }}
       >

@@ -1,5 +1,5 @@
 const React = require('react');
-const {Button} = require('bens_ui_components');
+const {Button, Divider} = require('bens_ui_components');
 const {getComments, getThread} = require('../hnAPI');
 const parse = require('html-react-parser');
 const {useState, useEffect} = React;
@@ -19,7 +19,12 @@ function Thread(props) {
   const displayComments = [];
   for (const c of comments) {
     if (!c.text || c.deleted) continue;
-    if (blockList.includes(c.by)) continue; // block
+    if (blockList.includes(c.by)) {
+      displayComments.push(<Divider key={"comment_" + c.id}
+        style={{border: '1px solid #b1a485', margin: '6 50', width: 'auto'}}
+      />);
+      continue;
+    }
     displayComments.push(<Comment comment={c} key={"comment_" + c.id} />);
   }
 
@@ -28,16 +33,17 @@ function Thread(props) {
       style={{
       }}
     >
-      <div
+      <a
         style={{
           paddingLeft: 25,
           marginBottom: 10,
           marginTop: 10,
           fontWeight: 'bold',
         }}
+        href={thread.url}
       >
         {thread.title}
-      </div>
+      </a>
       {displayComments}
     </div>
   );
@@ -51,7 +57,12 @@ const Comment = (props) => {
   if (comment.children) {
     for (const c of comment.children) {
       if (!c.text || c.deleted) continue;
-      if (blockList.includes(c.by)) continue; // block
+      if (blockList.includes(c.by)) {
+        children.push(<Divider key={"comment_" + c.id}
+          style={{border: '1px solid #b1a485', margin: '6 50', width: 'auto'}}
+        />);
+        continue;
+      }
       children.push(<Comment comment={c} key={"comment_" + c.id} />);
     }
   }
@@ -64,12 +75,19 @@ const Comment = (props) => {
       }}
     >
       <div
+        className={"parent"}
         style={{
           fontSize: 11,
+          height: 15,
           color: '#828282',
         }}
       >
-        {comment.by}
+        <a
+          href={"https://news.ycombinator.com/user?id=" + comment.by}
+          style={{color: '#828282'}}
+        >
+          {comment.by}
+        </a>
         <Button
           style={{
             float: 'right',
@@ -86,7 +104,7 @@ const Comment = (props) => {
       </div>
       <div
         style={{
-          fontSize: 13.5,
+          fontSize: 12.5,
           fontWeight: 400,
         }}
       >{parse(comment.text)}</div>
