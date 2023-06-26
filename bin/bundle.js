@@ -63,7 +63,7 @@ function Lobby(props) {
   }, displayThreads);
 }
 module.exports = Lobby;
-},{"../hnAPI":4,"../url":6,"bens_ui_components":31,"react":60}],2:[function(require,module,exports){
+},{"../hnAPI":4,"../url":6,"bens_ui_components":32,"react":61}],2:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -172,7 +172,7 @@ function Main(props) {
   }, "Ben's Better Hacker News Reader"), content, state.modal);
 }
 module.exports = Main;
-},{"../hnAPI":4,"../url":6,"./Lobby.react":1,"./Thread.react":3,"bens_ui_components":31,"react":60}],3:[function(require,module,exports){
+},{"../hnAPI":4,"../url":6,"./Lobby.react":1,"./Thread.react":3,"bens_ui_components":32,"react":61}],3:[function(require,module,exports){
 "use strict";
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -341,7 +341,7 @@ var Comment = function Comment(props) {
   }, parse(comment.text)), children));
 };
 module.exports = Thread;
-},{"../hnAPI":4,"bens_ui_components":31,"html-react-parser":46,"react":60}],4:[function(require,module,exports){
+},{"../hnAPI":4,"bens_ui_components":32,"html-react-parser":47,"react":61}],4:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -463,7 +463,7 @@ function renderUI(root) {
 }
 var root = _client["default"].createRoot(document.getElementById('container'));
 renderUI(root);
-},{"./UI/Main.react":2,"react":60,"react-dom/client":54}],6:[function(require,module,exports){
+},{"./UI/Main.react":2,"react":61,"react-dom/client":55}],6:[function(require,module,exports){
 "use strict";
 
 function setQueryParam(key, value) {
@@ -570,7 +570,7 @@ const AudioWidget = props => {
   }));
 };
 module.exports = AudioWidget;
-},{"./Button.react":9,"react":60}],8:[function(require,module,exports){
+},{"./Button.react":9,"react":61}],8:[function(require,module,exports){
 function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 const React = require('react');
 const CheckerBackground = require('./CheckerBackground.react.js');
@@ -689,7 +689,7 @@ const Piece = props => {
   }, props.sprite);
 };
 module.exports = Board;
-},{"./CheckerBackground.react.js":12,"./DragAreaDeprecated.react.js":14,"react":60}],9:[function(require,module,exports){
+},{"./CheckerBackground.react.js":12,"./DragAreaDeprecated.react.js":14,"react":61}],9:[function(require,module,exports){
 const React = require('react');
 const {
   useState,
@@ -725,6 +725,7 @@ function Button(props) {
       }
     }, props.hoverCard);
   }
+  const [touched, setTouched] = useState(false);
   return /*#__PURE__*/React.createElement("button", {
     type: "button",
     style: {
@@ -735,9 +736,17 @@ function Button(props) {
     key: id || label,
     className: props.disabled ? 'buttonDisable' : '',
     id: id.toUpperCase() + '_button',
-    onClick: props.disabled ? () => {} : props.onClick,
+    onClick: () => {
+      if (props.disabled) {
+        return;
+      }
+      if (touched) {
+        setTouched(false);
+        return;
+      }
+      props.onClick();
+    },
     onTouchStart: ev => {
-      ev.preventDefault();
       if (props.disabled) {
         return;
       }
@@ -747,14 +756,17 @@ function Button(props) {
         setIntervalID(null);
       }
       touchFn();
+      setTouched(true);
       // HACK: if you set the right condition, allow repetive presses
-      if (false) {
-        const interval = setInterval(touchFn, 120);
-        setIntervalID(interval);
-      }
+      // if (false) {
+      //   const interval = setInterval(touchFn, 120);
+      //   setIntervalID(interval);
+      // }
     },
+
     onTouchEnd: ev => {
       ev.preventDefault();
+      ev.stopPropagation();
       clearInterval(intervalID);
       setIntervalID(null);
       props.onMouseUp;
@@ -779,7 +791,7 @@ function Button(props) {
   }, props.label, hoverDisplay);
 }
 module.exports = Button;
-},{"react":60}],10:[function(require,module,exports){
+},{"react":61}],10:[function(require,module,exports){
 const React = require('react');
 const {
   useResponsiveDimensions
@@ -842,7 +854,7 @@ function Canvas(props) {
   }));
 }
 module.exports = Canvas;
-},{"./hooks":29,"react":60}],11:[function(require,module,exports){
+},{"./hooks":30,"react":61}],11:[function(require,module,exports){
 const React = require('react');
 
 /**
@@ -878,7 +890,7 @@ function Checkbox(props) {
   }
 }
 module.exports = Checkbox;
-},{"react":60}],12:[function(require,module,exports){
+},{"react":61}],12:[function(require,module,exports){
 const React = require('react');
 
 /**
@@ -926,7 +938,7 @@ const CheckerBackground = props => {
   }, squares);
 };
 module.exports = CheckerBackground;
-},{"react":60}],13:[function(require,module,exports){
+},{"react":61}],13:[function(require,module,exports){
 const React = require('react');
 function Divider(props) {
   const {
@@ -942,7 +954,7 @@ function Divider(props) {
   });
 }
 module.exports = Divider;
-},{"react":60}],14:[function(require,module,exports){
+},{"react":61}],14:[function(require,module,exports){
 const React = require('react');
 const {
   useMouseHandler,
@@ -1202,7 +1214,7 @@ const clampToArea = (dragAreaID, pixel, style) => {
   };
 };
 module.exports = DragArea;
-},{"./hooks":29,"bens_utils":38,"react":60}],15:[function(require,module,exports){
+},{"./hooks":30,"bens_utils":39,"react":61}],15:[function(require,module,exports){
 const React = require('react');
 
 /**
@@ -1240,7 +1252,7 @@ const Dropdown = function (props) {
   }, optionTags);
 };
 module.exports = Dropdown;
-},{"react":60}],16:[function(require,module,exports){
+},{"react":61}],16:[function(require,module,exports){
 const React = require('react');
 const {
   useEffect,
@@ -1286,7 +1298,7 @@ const usePrevious = value => {
   return ref.current;
 };
 module.exports = Indicator;
-},{"react":60}],17:[function(require,module,exports){
+},{"react":61}],17:[function(require,module,exports){
 const React = require('react');
 const InfoCard = props => {
   const overrideStyle = props.style || {};
@@ -1310,7 +1322,7 @@ const InfoCard = props => {
   }, props.children);
 };
 module.exports = InfoCard;
-},{"react":60}],18:[function(require,module,exports){
+},{"react":61}],18:[function(require,module,exports){
 const React = require('react');
 const Button = require('./Button.react');
 const Divider = require('./Divider.react');
@@ -1405,7 +1417,7 @@ function Modal(props) {
   }, buttonHTML)) : null));
 }
 module.exports = Modal;
-},{"./Button.react":9,"./Divider.react":13,"react":60}],19:[function(require,module,exports){
+},{"./Button.react":9,"./Divider.react":13,"react":61}],19:[function(require,module,exports){
 const React = require('react');
 const {
   useState,
@@ -1487,7 +1499,7 @@ const submitValue = (onChange, nextVal, onlyInt) => {
   }
 };
 module.exports = NumberField;
-},{"react":60}],20:[function(require,module,exports){
+},{"react":61}],20:[function(require,module,exports){
 function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 /**
  * See ~/Code/teaching/clusters for an example of how to use the plot
@@ -1775,7 +1787,7 @@ const PlotWatcher = props => {
   }));
 };
 module.exports = PlotWatcher;
-},{"./Button.react":9,"./Canvas.react":10,"react":60}],21:[function(require,module,exports){
+},{"./Button.react":9,"./Canvas.react":10,"react":61}],21:[function(require,module,exports){
 const React = require('react');
 const Button = require('./Button.react');
 const Modal = require('./Modal.react');
@@ -1858,7 +1870,7 @@ const quitGameModal = dispatch => {
   });
 };
 module.exports = QuitButton;
-},{"./Button.react":9,"./Modal.react":18,"bens_utils":38,"react":60}],22:[function(require,module,exports){
+},{"./Button.react":9,"./Modal.react":18,"bens_utils":39,"react":61}],22:[function(require,module,exports){
 const React = require('react');
 
 // props:
@@ -1891,7 +1903,7 @@ class RadioPicker extends React.Component {
   }
 }
 module.exports = RadioPicker;
-},{"react":60}],23:[function(require,module,exports){
+},{"react":61}],23:[function(require,module,exports){
 const React = require('react');
 const NumberField = require('./NumberField.react');
 const {
@@ -1968,7 +1980,7 @@ function Slider(props) {
   }), props.noOriginalValue ? null : "(" + originalValue + ")"));
 }
 module.exports = Slider;
-},{"./NumberField.react":19,"react":60}],24:[function(require,module,exports){
+},{"./NumberField.react":19,"react":61}],24:[function(require,module,exports){
 const React = require('react');
 
 /**
@@ -2012,7 +2024,7 @@ const SpriteSheet = props => {
   }));
 };
 module.exports = SpriteSheet;
-},{"react":60}],25:[function(require,module,exports){
+},{"react":61}],25:[function(require,module,exports){
 function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 const React = require('react');
 const {
@@ -2144,22 +2156,22 @@ const SwipePicker = props => {
       dispatch({
         prevLeft: state.left
       });
-      // check for onClick:
-      const indexAtPixel = getOptionAtOffset(options, pixel.x);
-      if (indexAtPixel != null && indexAtPixel == state.selectedIndex && options[indexAtPixel].onClick) {
-        options[indexAtPixel].onClick();
-      }
       if (onMouseDown) {
         onMouseDown(pixel);
       }
     },
     leftUp: (state, dispatch, pixel) => {
-      const selectedIndex = getOptionAtCenter(options, state.left);
+      const nextSelectedIndex = getOptionAtCenter(options, state.left);
+      // check for onClick:
+      const indexAtPixel = getOptionAtOffset(options, pixel.x);
+      if (indexAtPixel != null && indexAtPixel == state.selectedIndex && options[indexAtPixel].onClick && nextSelectedIndex == state.selectedIndex) {
+        options[indexAtPixel].onClick();
+      }
       dispatch({
-        selectedIndex
+        selectedIndex: nextSelectedIndex
       });
       if (onSelectIndex) {
-        onSelectIndex(selectedIndex, options[selectedIndex]);
+        onSelectIndex(nextSelectedIndex, options[nextSelectedIndex]);
       }
     },
     mouseLeave: (state, dispatch) => {
@@ -2193,7 +2205,7 @@ const SwipePicker = props => {
     dispatch({
       left: width / 2 - widthToSelectedElement
     });
-  }, [state.selectedIndex, !state.mouse.isLeftDown]);
+  }, [state.selectedIndex, !state.mouse.isLeftDown, width]);
   return /*#__PURE__*/React.createElement("div", {
     id: id,
     style: {
@@ -2277,7 +2289,7 @@ const PickerOption = props => {
   }, label);
 };
 module.exports = SwipePicker;
-},{"./hooks":29,"bens_utils":38,"react":60}],26:[function(require,module,exports){
+},{"./hooks":30,"bens_utils":39,"react":61}],26:[function(require,module,exports){
 const React = require('react');
 const Button = require('./Button.react');
 const Dropdown = require('./Dropdown.react');
@@ -2391,7 +2403,7 @@ function Table(props) {
         fontWeight: 'normal'
       }
     }, "Sort:", /*#__PURE__*/React.createElement(Button, {
-      label: "/\\\\",
+      label: "/\\",
       fontSize: 12,
       onClick: () => {
         setSortByColumn({
@@ -2464,7 +2476,7 @@ function Table(props) {
   }, props.hideNumRows ? null : /*#__PURE__*/React.createElement("span", null, "Total Rows: ", rows.length, " Rows Displayed: ", filteredRows.length), /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, headers)), /*#__PURE__*/React.createElement("tbody", null, rowHTML)));
 }
 module.exports = Table;
-},{"./Button.react":9,"./Dropdown.react":15,"react":60}],27:[function(require,module,exports){
+},{"./Button.react":9,"./Dropdown.react":15,"react":61}],27:[function(require,module,exports){
 const React = require('react');
 
 /**
@@ -2512,7 +2524,7 @@ const TextArea = props => {
   });
 };
 module.exports = TextArea;
-},{"react":60}],28:[function(require,module,exports){
+},{"react":61}],28:[function(require,module,exports){
 const React = require('react');
 
 /**
@@ -2554,7 +2566,55 @@ const TextField = props => {
   });
 };
 module.exports = TextField;
-},{"react":60}],29:[function(require,module,exports){
+},{"react":61}],29:[function(require,module,exports){
+const React = require('react');
+const {
+  useEffect,
+  useState,
+  createContext
+} = React;
+const WindowSizeContext = createContext({});
+const WindowSizeProvider = ({
+  children
+}) => {
+  // detect orientation changes
+  const [orientation, setOrientation] = useState(window.innerHeight > window.innerWidth ? 'portrait' : 'landscape');
+  useEffect(() => {
+    const handleResize = () => {
+      let isPortrait = window.innerHeight > window.innerWidth;
+      setOrientation(isPortrait ? 'portrait' : 'landscape');
+    };
+    window.matchMedia("(orientation: portrait)").addEventListener("change", handleResize);
+  }, []);
+
+  // screen resize
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  useEffect(() => {
+    function handleResize() {
+      setWindowWidth(window.innerWidth);
+      setWindowHeight(window.innerHeight);
+    }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [orientation]);
+  const values = {
+    orientation,
+    windowWidth,
+    windowHeight
+  };
+  return /*#__PURE__*/React.createElement(WindowSizeContext.Provider, {
+    value: values
+  }, children);
+};
+module.exports = {
+  WindowSizeContext,
+  WindowSizeProvider
+};
+},{"react":61}],30:[function(require,module,exports){
 const React = require('react');
 const {
   throttle
@@ -3045,7 +3105,7 @@ module.exports = {
   useCompare,
   usePrevious
 };
-},{"bens_utils":38,"react":60}],30:[function(require,module,exports){
+},{"bens_utils":39,"react":61}],31:[function(require,module,exports){
 // type Point = {
 //   x: number,
 //   y: number,
@@ -3130,7 +3190,7 @@ const plotReducer = (state, action) => {
 module.exports = {
   plotReducer
 };
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 
 // const React = require('react');
 // const ReactDOM = require('react-dom');
@@ -3161,12 +3221,13 @@ module.exports = {
   Table: require('./bin/Table.react.js'),
   TextField: require('./bin/TextField.react.js'),
   TextArea: require('./bin/TextArea.react.js'),
+  ...require('./bin/WindowSizeContext.react.js'),
   ...require('./bin/hooks.js'),
 };
 
 
 
-},{"./bin/AudioWidget.react.js":7,"./bin/Board.react.js":8,"./bin/Button.react.js":9,"./bin/Canvas.react.js":10,"./bin/Checkbox.react.js":11,"./bin/CheckerBackground.react.js":12,"./bin/Divider.react.js":13,"./bin/DragAreaDeprecated.react.js":14,"./bin/Dropdown.react.js":15,"./bin/Indicator.react.js":16,"./bin/InfoCard.react.js":17,"./bin/Modal.react.js":18,"./bin/NumberField.react.js":19,"./bin/Plot.react.js":20,"./bin/QuitButton.react.js":21,"./bin/RadioPicker.react.js":22,"./bin/Slider.react.js":23,"./bin/SpriteSheet.react.js":24,"./bin/SwipePicker.react.js":25,"./bin/Table.react.js":26,"./bin/TextArea.react.js":27,"./bin/TextField.react.js":28,"./bin/hooks.js":29,"./bin/plotReducer.js":30}],32:[function(require,module,exports){
+},{"./bin/AudioWidget.react.js":7,"./bin/Board.react.js":8,"./bin/Button.react.js":9,"./bin/Canvas.react.js":10,"./bin/Checkbox.react.js":11,"./bin/CheckerBackground.react.js":12,"./bin/Divider.react.js":13,"./bin/DragAreaDeprecated.react.js":14,"./bin/Dropdown.react.js":15,"./bin/Indicator.react.js":16,"./bin/InfoCard.react.js":17,"./bin/Modal.react.js":18,"./bin/NumberField.react.js":19,"./bin/Plot.react.js":20,"./bin/QuitButton.react.js":21,"./bin/RadioPicker.react.js":22,"./bin/Slider.react.js":23,"./bin/SpriteSheet.react.js":24,"./bin/SwipePicker.react.js":25,"./bin/Table.react.js":26,"./bin/TextArea.react.js":27,"./bin/TextField.react.js":28,"./bin/WindowSizeContext.react.js":29,"./bin/hooks.js":30,"./bin/plotReducer.js":31}],33:[function(require,module,exports){
 'use strict';
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -3330,7 +3391,7 @@ module.exports = {
   getEntityPositions: getEntityPositions,
   entityInsideGrid: entityInsideGrid
 };
-},{"./helpers":33,"./math":34,"./vectors":37}],33:[function(require,module,exports){
+},{"./helpers":34,"./math":35,"./vectors":38}],34:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -3494,7 +3555,7 @@ module.exports = {
   deepCopy: deepCopy,
   throttle: throttle, debounce: debounce
 };
-},{"./vectors":37}],34:[function(require,module,exports){
+},{"./vectors":38}],35:[function(require,module,exports){
 "use strict";
 
 var clamp = function clamp(val, min, max) {
@@ -3539,7 +3600,7 @@ module.exports = {
   clamp: clamp,
   subtractWithDeficit: subtractWithDeficit
 };
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 'use strict';
 
 function isIpad() {
@@ -3570,7 +3631,7 @@ module.exports = {
   isMobile: isMobile,
   isPhone: isPhone
 };
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 "use strict";
 
 var floor = Math.floor,
@@ -3625,7 +3686,7 @@ module.exports = {
   oneOf: oneOf,
   weightedOneOf: weightedOneOf
 };
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 "use strict";
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -3824,7 +3885,7 @@ module.exports = {
   rotate: rotate,
   abs: abs
 };
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 
 module.exports = {
   vectors: require('./bin/vectors'),
@@ -3835,7 +3896,7 @@ module.exports = {
   math: require('./bin/math'),
 }
 
-},{"./bin/gridHelpers":32,"./bin/helpers":33,"./bin/math":34,"./bin/platform":35,"./bin/stochastic":36,"./bin/vectors":37}],39:[function(require,module,exports){
+},{"./bin/gridHelpers":33,"./bin/helpers":34,"./bin/math":35,"./bin/platform":36,"./bin/stochastic":37,"./bin/vectors":38}],40:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Doctype = exports.CDATA = exports.Tag = exports.Style = exports.Script = exports.Comment = exports.Directive = exports.Text = exports.Root = exports.isTag = exports.ElementType = void 0;
@@ -3892,7 +3953,7 @@ exports.CDATA = ElementType.CDATA;
 /** Type for <!doctype ...> */
 exports.Doctype = ElementType.Doctype;
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -4059,7 +4120,7 @@ var DomHandler = /** @class */ (function () {
 exports.DomHandler = DomHandler;
 exports.default = DomHandler;
 
-},{"./node.js":41,"domelementtype":39}],41:[function(require,module,exports){
+},{"./node.js":42,"domelementtype":40}],42:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -4535,7 +4596,7 @@ function cloneChildren(childs) {
     return children;
 }
 
-},{"domelementtype":39}],42:[function(require,module,exports){
+},{"domelementtype":40}],43:[function(require,module,exports){
 /**
  * SVG elements are case-sensitive.
  *
@@ -4575,7 +4636,7 @@ exports.CASE_SENSITIVE_TAG_NAMES = [
   'textPath'
 ];
 
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 // constants
 var HTML = 'html';
 var HEAD = 'head';
@@ -4740,7 +4801,7 @@ function domparser(html) {
 
 module.exports = domparser;
 
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 var domparser = require('./domparser');
 var utilities = require('./utilities');
 
@@ -4776,7 +4837,7 @@ function HTMLDOMParser(html) {
 
 module.exports = HTMLDOMParser;
 
-},{"./domparser":43,"./utilities":45}],45:[function(require,module,exports){
+},{"./domparser":44,"./utilities":46}],46:[function(require,module,exports){
 var domhandler = require('domhandler');
 var constants = require('./constants');
 
@@ -4914,7 +4975,7 @@ function formatDOM(nodes, parent, directive) {
 exports.formatAttributes = formatAttributes;
 exports.formatDOM = formatDOM;
 
-},{"./constants":42,"domhandler":40}],46:[function(require,module,exports){
+},{"./constants":43,"domhandler":41}],47:[function(require,module,exports){
 var domhandler = require('domhandler');
 var htmlToDOM = require('html-dom-parser');
 
@@ -4966,7 +5027,7 @@ HTMLReactParser.Text = domhandler.Text;
 module.exports = HTMLReactParser;
 HTMLReactParser.default = HTMLReactParser;
 
-},{"./lib/attributes-to-props":47,"./lib/dom-to-react":48,"domhandler":40,"html-dom-parser":44}],47:[function(require,module,exports){
+},{"./lib/attributes-to-props":48,"./lib/dom-to-react":49,"domhandler":41,"html-dom-parser":45}],48:[function(require,module,exports){
 var reactProperty = require('react-property');
 var utilities = require('./utilities');
 
@@ -5060,7 +5121,7 @@ function getPropName(attributeName) {
   return reactProperty.possibleStandardNames[attributeName];
 }
 
-},{"./utilities":49,"react-property":56}],48:[function(require,module,exports){
+},{"./utilities":50,"react-property":57}],49:[function(require,module,exports){
 var React = require('react');
 var attributesToProps = require('./attributes-to-props');
 var utilities = require('./utilities');
@@ -5201,7 +5262,7 @@ function skipAttributesToProps(node) {
 
 module.exports = domToReact;
 
-},{"./attributes-to-props":47,"./utilities":49,"react":60}],49:[function(require,module,exports){
+},{"./attributes-to-props":48,"./utilities":50,"react":61}],50:[function(require,module,exports){
 var React = require('react');
 var styleToJS = require('style-to-js').default;
 
@@ -5333,7 +5394,7 @@ module.exports = {
   elementsWithNoTextChildren: elementsWithNoTextChildren
 };
 
-},{"react":60,"style-to-js":64}],50:[function(require,module,exports){
+},{"react":61,"style-to-js":65}],51:[function(require,module,exports){
 // http://www.w3.org/TR/CSS21/grammar.html
 // https://github.com/visionmedia/css-parse/pull/49#issuecomment-30088027
 var COMMENT_REGEX = /\/\*[^*]*\*+([^/*][^*]*\*+)*\//g;
@@ -5596,7 +5657,7 @@ function trim(str) {
   return str ? str.replace(TRIM_REGEX, EMPTY_STRING) : EMPTY_STRING;
 }
 
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -5782,7 +5843,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 (function (process){(function (){
 /**
  * @license React
@@ -35654,7 +35715,7 @@ if (
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":51,"react":60,"scheduler":63}],53:[function(require,module,exports){
+},{"_process":52,"react":61,"scheduler":64}],54:[function(require,module,exports){
 /**
  * @license React
  * react-dom.production.min.js
@@ -35979,7 +36040,7 @@ exports.hydrateRoot=function(a,b,c){if(!ol(a))throw Error(p(405));var d=null!=c&
 e);return new nl(b)};exports.render=function(a,b,c){if(!pl(b))throw Error(p(200));return sl(null,a,b,!1,c)};exports.unmountComponentAtNode=function(a){if(!pl(a))throw Error(p(40));return a._reactRootContainer?(Sk(function(){sl(null,null,a,!1,function(){a._reactRootContainer=null;a[uf]=null})}),!0):!1};exports.unstable_batchedUpdates=Rk;
 exports.unstable_renderSubtreeIntoContainer=function(a,b,c,d){if(!pl(c))throw Error(p(200));if(null==a||void 0===a._reactInternals)throw Error(p(38));return sl(a,b,c,!1,d)};exports.version="18.2.0-next-9e3b772b8-20220608";
 
-},{"react":60,"scheduler":63}],54:[function(require,module,exports){
+},{"react":61,"scheduler":64}],55:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -36008,7 +36069,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":51,"react-dom":55}],55:[function(require,module,exports){
+},{"_process":52,"react-dom":56}],56:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -36050,7 +36111,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"./cjs/react-dom.development.js":52,"./cjs/react-dom.production.min.js":53,"_process":51}],56:[function(require,module,exports){
+},{"./cjs/react-dom.development.js":53,"./cjs/react-dom.production.min.js":54,"_process":52}],57:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -36369,7 +36430,7 @@ exports.getPropertyInfo = getPropertyInfo;
 exports.isCustomAttribute = isCustomAttribute;
 exports.possibleStandardNames = possibleStandardNames;
 
-},{"../lib/possibleStandardNamesOptimized":57}],57:[function(require,module,exports){
+},{"../lib/possibleStandardNamesOptimized":58}],58:[function(require,module,exports){
 // An attribute in which the DOM/SVG standard name is the same as the React prop name (e.g., 'accept').
 var SAME = 0;
 exports.SAME = SAME;
@@ -36864,7 +36925,7 @@ exports.possibleStandardNames = {
   zoomAndPan: 1
 };
 
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 (function (process){(function (){
 /**
  * @license React
@@ -39607,7 +39668,7 @@ if (
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":51}],59:[function(require,module,exports){
+},{"_process":52}],60:[function(require,module,exports){
 /**
  * @license React
  * react.production.min.js
@@ -39635,7 +39696,7 @@ exports.useCallback=function(a,b){return U.current.useCallback(a,b)};exports.use
 exports.useInsertionEffect=function(a,b){return U.current.useInsertionEffect(a,b)};exports.useLayoutEffect=function(a,b){return U.current.useLayoutEffect(a,b)};exports.useMemo=function(a,b){return U.current.useMemo(a,b)};exports.useReducer=function(a,b,e){return U.current.useReducer(a,b,e)};exports.useRef=function(a){return U.current.useRef(a)};exports.useState=function(a){return U.current.useState(a)};exports.useSyncExternalStore=function(a,b,e){return U.current.useSyncExternalStore(a,b,e)};
 exports.useTransition=function(){return U.current.useTransition()};exports.version="18.2.0";
 
-},{}],60:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -39646,7 +39707,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"./cjs/react.development.js":58,"./cjs/react.production.min.js":59,"_process":51}],61:[function(require,module,exports){
+},{"./cjs/react.development.js":59,"./cjs/react.production.min.js":60,"_process":52}],62:[function(require,module,exports){
 (function (process,setImmediate){(function (){
 /**
  * @license React
@@ -40284,7 +40345,7 @@ if (
 }
 
 }).call(this)}).call(this,require('_process'),require("timers").setImmediate)
-},{"_process":51,"timers":67}],62:[function(require,module,exports){
+},{"_process":52,"timers":68}],63:[function(require,module,exports){
 (function (setImmediate){(function (){
 /**
  * @license React
@@ -40307,7 +40368,7 @@ exports.unstable_scheduleCallback=function(a,b,c){var d=exports.unstable_now();"
 exports.unstable_shouldYield=M;exports.unstable_wrapCallback=function(a){var b=y;return function(){var c=y;y=b;try{return a.apply(this,arguments)}finally{y=c}}};
 
 }).call(this)}).call(this,require("timers").setImmediate)
-},{"timers":67}],63:[function(require,module,exports){
+},{"timers":68}],64:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -40318,7 +40379,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this)}).call(this,require('_process'))
-},{"./cjs/scheduler.development.js":61,"./cjs/scheduler.production.min.js":62,"_process":51}],64:[function(require,module,exports){
+},{"./cjs/scheduler.development.js":62,"./cjs/scheduler.production.min.js":63,"_process":52}],65:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -40340,7 +40401,7 @@ function StyleToJS(style, options) {
 }
 exports["default"] = StyleToJS;
 
-},{"./utilities":65,"style-to-object":66}],65:[function(require,module,exports){
+},{"./utilities":66,"style-to-object":67}],66:[function(require,module,exports){
 "use strict";
 exports.__esModule = true;
 exports.camelCase = void 0;
@@ -40374,7 +40435,7 @@ var camelCase = function (property, options) {
 };
 exports.camelCase = camelCase;
 
-},{}],66:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 var parse = require('inline-style-parser');
 
 /**
@@ -40419,7 +40480,7 @@ function StyleToObject(style, iterator) {
 module.exports = StyleToObject;
 module.exports.default = StyleToObject; // ESM support
 
-},{"inline-style-parser":50}],67:[function(require,module,exports){
+},{"inline-style-parser":51}],68:[function(require,module,exports){
 (function (setImmediate,clearImmediate){(function (){
 var nextTick = require('process/browser.js').nextTick;
 var apply = Function.prototype.apply;
@@ -40498,4 +40559,4 @@ exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate :
   delete immediateIds[id];
 };
 }).call(this)}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
-},{"process/browser.js":51,"timers":67}]},{},[5]);
+},{"process/browser.js":52,"timers":68}]},{},[5]);
